@@ -3,25 +3,42 @@ package com.fiap.amaralrentcar.model;
 import java.util.UUID;
 
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "cars")
 public class Car {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID id;
-    
-    public String name;
+    public String plate;
+    public String status;
 
 
-    public  Car(String name) {
-        this.id = UUID.randomUUID();
-        this.name = name;
+    public  Car(String plate) {
+        this.plate = plate;
+        this.status = "avaliable";
     }
 
     public Car() {
-        this.id = UUID.randomUUID();
+        this.status = "avaliable";
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getPlate() {
+        return plate;
+    }
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
