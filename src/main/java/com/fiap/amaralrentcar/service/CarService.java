@@ -3,11 +3,11 @@ package com.fiap.amaralrentcar.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fiap.amaralrentcar.model.CarCreateDto;
+import com.fiap.amaralrentcar.entity.CarCreateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fiap.amaralrentcar.model.Car;
+import com.fiap.amaralrentcar.entity.Car;
 import com.fiap.amaralrentcar.repository.CarRepository;
 
 @Service

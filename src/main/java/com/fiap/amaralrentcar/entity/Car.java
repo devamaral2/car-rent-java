@@ -1,4 +1,4 @@
-package com.fiap.amaralrentcar.model;
+package com.fiap.amaralrentcar.entity;
 
 import java.util.UUID;
 
