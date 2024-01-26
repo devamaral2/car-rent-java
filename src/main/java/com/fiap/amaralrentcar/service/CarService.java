@@ -1,12 +1,17 @@
 package com.fiap.amaralrentcar.service;
 
+import com.fiap.amaralrentcar.dtos.CarDto;
+import com.fiap.amaralrentcar.dtos.CarStatusChangeDto;
+import com.fiap.amaralrentcar.dtos.CarStatusChangeResponse;
 import com.fiap.amaralrentcar.entity.Car;
 import com.fiap.amaralrentcar.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CarService {
@@ -14,27 +19,61 @@ public class CarService {
     @Autowired
     private CarRepository carRepository;
 
-    public List<Car> findAll() {
-
-        Iterable<Car> carIterable = carRepository.findAll();
-
-        List<Car> result = new ArrayList<Car>();
-        carIterable.forEach(result::add);
-        return result;
-
-//        var cars = carRepository.findAll();
-//
-//        return cars.stream().map(this::toCarDto).collect(Collectors.toList());
+    public List<CarDto> findAvailableCars() {
+        var cars = carRepository.findAvailableCars();
+        return cars.stream().map(this::toCarDto).collect(Collectors.toList());
     }
 
-//    private CarCreateDto toCarDto(Car car) {
-//        return new CarCreateDto.CarCreateDtoBuilder().plate('x3pto').build()
-//        )
-//    }
+    public CarStatusChangeResponse changeStatus(UUID id, CarStatusChangeDto carStatusChangeDto) throws Exception {
+        Optional<Car> car = carRepository.findById(id);
+        if (car.isPresent()) {
+            Car carToUpdate = car.get();
+            carToUpdate.setStatus(carStatusChangeDto.status());
+            carRepository.save(carToUpdate);
+            return new CarStatusChangeResponse(carStatusChangeDto.status());
+        } else {
+            throw new Exception("Não existe um carro com esta referência no banco de dados");
+        }
 
-    public Car create(Car car) {
-        return carRepository.save(car);
+    }
 
+    private Car toCarClass(CarDto carDto) {
+        return Car.builder()
+                .plate(carDto.plate())
+                .status(carDto.status())
+                .model(carDto.model())
+                .year(carDto.year())
+                .color(carDto.color())
+                .km(carDto.km())
+                .imageUrl((carDto.imageUrl()))
+                .carType(carDto.carType())
+                .price(carDto.price())
+                .power(carDto.power())
+                .numberOfPassengers(carDto.numberOfPassangers())
+                .trunkCapacity(carDto.trunkCapacity())
+                .build();
+    }
+
+    private CarDto toCarDto(Car car) {
+        return new CarDto(
+                car.getPlate(),
+                car.getStatus(),
+                car.getModel(),
+                car.getYear(),
+                car.getColor(),
+                car.getKm(),
+                car.getImageUrl(),
+                car.getCarType(),
+                car.getPrice(),
+                car.getPower(),
+                car.getNumberOfPassengers(),
+                car.getFuelComsumption(),
+                car.getTrunkCapacity());
+    }
+
+    public CarDto create(CarDto car) {
+        Car carCreated = carRepository.save(toCarClass(car));
+        return toCarDto(carCreated);
     }
 
 }

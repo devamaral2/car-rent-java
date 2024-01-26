@@ -21,10 +21,8 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID id;
 
-    @NotBlank
     public String email;
 
-    @Nullable
     public String name;
 
     @OneToMany(mappedBy = "client")

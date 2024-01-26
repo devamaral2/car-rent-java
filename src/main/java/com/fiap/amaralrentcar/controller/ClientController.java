@@ -1,7 +1,7 @@
 package com.fiap.amaralrentcar.controller;
 
 import com.fiap.amaralrentcar.controller.Exception.ValidationTrigger;
-import com.fiap.amaralrentcar.dtos.ClientCreateDto;
+import com.fiap.amaralrentcar.dtos.ClientDto;
 import com.fiap.amaralrentcar.entity.Client;
 import com.fiap.amaralrentcar.service.ClientService;
 import jakarta.validation.Valid;
@@ -24,20 +24,10 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping("/client")
-    public List<Client> GetAllCars() {
-
-        return clientService.findAll();
-    }
-//@PathVariable para pegar o id "/{:id}"
-
-    //    repo.findById(id).orElseThrow(() -> new ControllerNotFoundException("exception"))
-//    try {} catch (EntityNotFoundException e) { throw new ControllerNotFoundException("não encontrado")}
     @PostMapping("/client")
-    public ResponseEntity<Client> create(@RequestBody @Valid ClientCreateDto client, BindingResult bindingResult) {
+    public ResponseEntity<ClientDto> create(@RequestBody @Valid ClientDto client, BindingResult bindingResult) {
         new ValidationTrigger(bindingResult).verify();
-        Client createdCar = clientService.create(client);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCar);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.create(client));
     }
 
 }

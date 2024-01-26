@@ -5,5 +5,5 @@ import jakarta.validation.constraints.Email;
 import lombok.Builder;
 
 @Builder
-public record ClientCreateDto(@Email String email, @Nullable String name) {
+public record ClientDto(@Email String email, @Nullable String name) {
 }

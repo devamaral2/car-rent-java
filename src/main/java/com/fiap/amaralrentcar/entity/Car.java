@@ -1,7 +1,6 @@
 package com.fiap.amaralrentcar.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.List;
@@ -19,10 +18,9 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID id;
 
-    @NotBlank
     public String plate;
 
-    public String status;
+    public StatusEnum status;
 
     public String model;
 
@@ -40,7 +38,7 @@ public class Car {
 
     public Double power;
 
-    public String numberOfPassangers;
+    public String numberOfPassengers;
 
     public Double fuelComsumption;
 

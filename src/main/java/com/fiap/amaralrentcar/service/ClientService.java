@@ -1,6 +1,6 @@
 package com.fiap.amaralrentcar.service;
 
-import com.fiap.amaralrentcar.dtos.ClientCreateDto;
+import com.fiap.amaralrentcar.dtos.ClientDto;
 import com.fiap.amaralrentcar.entity.Client;
 import com.fiap.amaralrentcar.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,32 +17,20 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public List<Client> findAll() {
-
-        Iterable<Client> clientIterable = clientRepository.findAll();
-
-        List<Client> result = new ArrayList<Client>();
-        clientIterable.forEach(result::add);
-        return result;
-
-//        var cars = clientRepository.findAll();
-//
-//        return cars.stream().map(this::toCarDto).collect(Collectors.toList());
+    private ClientDto toClientDto (Client client) {
+         return new ClientDto(client.email, client.name);
     }
 
-//    private CarCreateDto toCarDto(Client car) {
-//        return new CarCreateDto.CarCreateDtoBuilder().plate('x3pto').build()
-//        )
-//    }
-
-    public Client create(ClientCreateDto clientCreateDto) {
-        Client client = Client
+    private Client toClientClass (ClientDto clientDto) {
+        return Client
                 .builder()
-                .email(clientCreateDto.email())
-                .name(clientCreateDto.name())
+                .email(clientDto.email())
+                .name(clientDto.name())
                 .build();
+    }
 
-        return clientRepository.save(client);
-
+    public ClientDto create(ClientDto clientDto) {
+        Client savedClient = clientRepository.save(toClientClass(clientDto));
+        return toClientDto(savedClient);
     }
 }
