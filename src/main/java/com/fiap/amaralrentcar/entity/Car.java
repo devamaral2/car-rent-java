@@ -1,44 +1,51 @@
 package com.fiap.amaralrentcar.entity;
 
-import java.util.UUID;
-
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "cars")
+@Builder
+@Getter
+@Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Car {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID id;
+
+    @NotBlank
     public String plate;
+
     public String status;
 
+    public String model;
 
-    public  Car(String plate) {
-        this.plate = plate;
-        this.status = "avaliable";
-    }
+    public String year;
 
-    public Car() {
-        this.status = "avaliable";
-    }
+    public String color;
 
-    public UUID getId() {
-        return id;
-    }
+    public Integer km;
 
-    public String getPlate() {
-        return plate;
-    }
+    public String imageUrl;
 
+    public String carType;
 
-    public String getStatus() {
-        return status;
-    }
+    public Double price;
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public Double power;
+
+    public String numberOfPassangers;
+
+    public Double fuelComsumption;
+
+    public String trunkCapacity;
+
+    @OneToMany(mappedBy = "car")
+    public List<Rent> rents;
 }
