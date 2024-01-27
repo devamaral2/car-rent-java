@@ -1,15 +1,12 @@
-package com.fiap.amaralrentcar.dtos;
-
-import com.fiap.amaralrentcar.entity.StatusEnum;
-
+package com.fiap.amaralrentcar.service.responses;
 
 public class CarStatusChangeResponse {
-    private final String message;
-    private final StatusEnum status;
+    public String message;
+    public String status;
 
-    public CarStatusChangeResponse(StatusEnum status) {
+    public CarStatusChangeResponse(String status) {
         this.status = status;
-        if (status == StatusEnum.AVAILABLE) {
+        if (status == "available") {
             this.message = "Este carro agora está disponível para ser alugado";
         } else {
             this.message = "Um cliente acrescentou este carro na sua lista de compras";

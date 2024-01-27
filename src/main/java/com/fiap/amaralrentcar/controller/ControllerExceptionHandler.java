@@ -1,8 +1,8 @@
 package com.fiap.amaralrentcar.controller;
 
-import com.fiap.amaralrentcar.controller.Exception.BadRequestException;
-import com.fiap.amaralrentcar.controller.Exception.ControllerNotFoundException;
-import com.fiap.amaralrentcar.controller.Exception.StandardError;
+import com.fiap.amaralrentcar.controller.exception.BadRequestException;
+import com.fiap.amaralrentcar.controller.exception.ControllerNotFoundException;
+import com.fiap.amaralrentcar.controller.exception.StandardError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,8 @@
 package com.fiap.amaralrentcar.dtos;
 
-import com.fiap.amaralrentcar.entity.StatusEnum;
 import jakarta.validation.constraints.NotBlank;
 
-public record CarStatusChangeDto(@NotBlank StatusEnum status) {
+public record CarStatusChangeDto(
+        @NotBlank(message = "O campo status deve ser preenchido")
+        String status) {
 }

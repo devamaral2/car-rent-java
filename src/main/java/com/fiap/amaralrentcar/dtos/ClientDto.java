@@ -2,8 +2,12 @@ package com.fiap.amaralrentcar.dtos;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Email;
-import lombok.Builder;
+import jakarta.validation.constraints.NotBlank;
 
-@Builder
-public record ClientDto(@Email String email, @Nullable String name) {
+public record ClientDto(
+        @Email(message = "O email não esta no formato correto")
+        @NotBlank(message = " O email não pode estar em branco")
+        String email,
+        @Nullable
+        String name) {
 }

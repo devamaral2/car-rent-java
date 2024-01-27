@@ -1,15 +1,13 @@
 package com.fiap.amaralrentcar.controller;
 
-import com.fiap.amaralrentcar.controller.Exception.ControllerNotFoundException;
-import com.fiap.amaralrentcar.controller.Exception.ValidationTrigger;
+import com.fiap.amaralrentcar.controller.exception.ControllerNotFoundException;
+import com.fiap.amaralrentcar.controller.exception.ValidationTrigger;
 import com.fiap.amaralrentcar.dtos.CarDto;
 import com.fiap.amaralrentcar.dtos.CarStatusChangeDto;
-import com.fiap.amaralrentcar.dtos.CarStatusChangeResponse;
 import com.fiap.amaralrentcar.service.CarService;
+import com.fiap.amaralrentcar.service.responses.CarStatusChangeResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,21 +16,22 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 
-@RestController("/car")
+@RestController
 public class CarController {
     Logger logger = Logger.getLogger("CarController");
     @Autowired
     private CarService carService;
 
-    @GetMapping("/")
-//    Este metodo entrega uma lista com todos os carros que não estão sendo alugados e que também não estão reservvados por clientes
+    @GetMapping("/car")
     public List<CarDto> findAvailableCars() {
         return carService.findAvailableCars();
     }
 
-    @PutMapping("/change-status/{id}")
-//    Este metodo reserva um carro toda vez que algum usuário escolhe um carro para iniciar uma compra e também remove o mesmo caso o tempo de sessão expire ou o usuário finalize a sessão
-    public CarStatusChangeResponse changeStatus(@PathVariable UUID id, @Valid CarStatusChangeDto carStatusChangeDto, BindingResult bindingResult) {
+    @PatchMapping("/car/change-status/{id}")
+    public CarStatusChangeResponse changeStatus(
+            @PathVariable UUID id,
+            @RequestBody @Valid CarStatusChangeDto carStatusChangeDto,
+            BindingResult bindingResult) {
         new ValidationTrigger(bindingResult).verify();
         try {
             return carService.changeStatus(id, carStatusChangeDto);
@@ -41,11 +40,11 @@ public class CarController {
         }
     }
 
-    @PostMapping("/")
-    public ResponseEntity<CarDto> create(@RequestBody @Valid CarDto car, BindingResult bindingResult) {
+    @PostMapping("/car")
+    public CarDto create(@RequestBody @Valid CarDto car, BindingResult bindingResult) {
+        logger.info("kalsjdalksjdlkajdslkjasdlkjadsjkl");
         new ValidationTrigger(bindingResult).verify();
-        CarDto createdCar = carService.create(car);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCar);
+        return carService.create(car);
     }
 
 }

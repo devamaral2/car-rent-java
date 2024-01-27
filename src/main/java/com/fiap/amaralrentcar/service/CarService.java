@@ -2,19 +2,21 @@ package com.fiap.amaralrentcar.service;
 
 import com.fiap.amaralrentcar.dtos.CarDto;
 import com.fiap.amaralrentcar.dtos.CarStatusChangeDto;
-import com.fiap.amaralrentcar.dtos.CarStatusChangeResponse;
 import com.fiap.amaralrentcar.entity.Car;
 import com.fiap.amaralrentcar.repository.CarRepository;
+import com.fiap.amaralrentcar.service.responses.CarStatusChangeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 public class CarService {
+    Logger logger = Logger.getLogger("CarController");
 
     @Autowired
     private CarRepository carRepository;
@@ -49,7 +51,7 @@ public class CarService {
                 .carType(carDto.carType())
                 .price(carDto.price())
                 .power(carDto.power())
-                .numberOfPassengers(carDto.numberOfPassangers())
+                .numberOfPassengers(carDto.numberOfPassengers())
                 .trunkCapacity(carDto.trunkCapacity())
                 .build();
     }
@@ -67,12 +69,13 @@ public class CarService {
                 car.getPrice(),
                 car.getPower(),
                 car.getNumberOfPassengers(),
-                car.getFuelComsumption(),
+                car.getFuelConsumption(),
                 car.getTrunkCapacity());
     }
 
     public CarDto create(CarDto car) {
         Car carCreated = carRepository.save(toCarClass(car));
+        logger.info(carCreated.toString());
         return toCarDto(carCreated);
     }
 

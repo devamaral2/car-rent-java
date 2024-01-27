@@ -1,4 +1,4 @@
-package com.fiap.amaralrentcar.controller.Exception;
+package com.fiap.amaralrentcar.controller.exception;
 
 import lombok.AllArgsConstructor;
 import org.springframework.validation.BindingResult;

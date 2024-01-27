@@ -1,10 +1,7 @@
 package com.fiap.amaralrentcar.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -13,6 +10,7 @@ import java.util.UUID;
 @Table(name = "rents")
 @Getter
 @Setter
+@Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class Rent {
@@ -20,10 +18,13 @@ public class Rent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID id;
 
+    @Column(name = "start_date")
     public LocalDateTime startDate;
 
+    @Column(name = "expected_end_date")
     public LocalDateTime expectedEndDate;
 
+    @Column(name = "end_date")
     public LocalDateTime endDate;
 
     @ManyToOne

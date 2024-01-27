@@ -13,6 +13,7 @@ import java.util.UUID;
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +21,7 @@ public class Car {
 
     public String plate;
 
-    public StatusEnum status;
+    public String status;
 
     public String model;
 
@@ -30,18 +31,23 @@ public class Car {
 
     public Integer km;
 
+    @Column(name = "image_url")
     public String imageUrl;
 
+    @Column(name = "car_type")
     public String carType;
 
     public Double price;
 
     public Double power;
 
-    public String numberOfPassengers;
+    @Column(name = "number_of_passengers")
+    public Integer numberOfPassengers;
 
-    public Double fuelComsumption;
+    @Column(name = "fuel_consumption")
+    public Double fuelConsumption;
 
+    @Column(name = "trunk_capacity")
     public String trunkCapacity;
 
     @OneToMany(mappedBy = "car")
